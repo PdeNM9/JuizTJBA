@@ -34,6 +34,7 @@ jobs:
         run: |
           mkdir -p ./_site
           cp -r ./public/* ./_site/
+          cp ./public/bd.xlsx ./_site/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
