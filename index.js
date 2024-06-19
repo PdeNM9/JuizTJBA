@@ -1,50 +1,57 @@
 const express = require('express');
-const app = express();
+const path = require('path');
 const XLSX = require('xlsx');
-const port = process.env.PORT || 3000;
+const app = express();
+const port = process.env.PORT || 3000; // Replit utiliza a variável process.env.PORT
+
+app.use(express.static('public')); // Serve static files from 'public' directory
 
 let workbook;
 let flashcardsSheet;
 let materiasSheet;
 
-// Função para carregar o arquivo XLSX
 function loadWorkbook() {
-    workbook = XLSX.readFile('bd.xlsx');
-    flashcardsSheet = workbook.Sheets['Flashcards'];
-    materiasSheet = workbook.Sheets['Materias'];
-}
-
-// Função para carregar as matérias e retornar como JSON
-function loadMaterias() {
-    let materias = XLSX.utils.sheet_to_json(materiasSheet);
-    return materias;
-}
-
-// Função para carregar e filtrar flashcards
-function loadFlashcards(selectedMateria, selectedCount) {
-    let flashcards = XLSX.utils.sheet_to_json(flashcardsSheet);
-    if (selectedMateria !== 'all') {
-        flashcards = flashcards.filter(card => card.Materia === selectedMateria);
+    try {
+        workbook = XLSX.readFile('bd.xlsx');
+        flashcardsSheet = workbook.Sheets['Flashcards'];
+        materiasSheet = workbook.Sheets['Materia'];
+    } catch (error) {
+        console.error('Erro ao carregar a planilha:', error);
     }
-    return flashcards.slice(0, selectedCount === 'all' ? flashcards.length : parseInt(selectedCount));
 }
 
-// Configuração das rotas do servidor
+// Rota padrão para servir o HTML principal
 app.get('/', (req, res) => {
-    res.send('Welcome to the Flashcards API! Use /materias to see available subjects and /flashcards to access flashcards.');
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// API para materias
 app.get('/materias', (req, res) => {
-    res.json(loadMaterias());
+    try {
+        let materias = XLSX.utils.sheet_to_json(materiasSheet);
+        res.json(materias);
+    } catch (error) {
+        res.status(500).send('Erro ao obter materias');
+    }
 });
 
+// API para flashcards
 app.get('/flashcards', (req, res) => {
-    const { materia, count } = req.query;
-    res.json(loadFlashcards(materia || 'all', count || 'all'));
+    try {
+        const { materia, count } = req.query;
+        let flashcards = XLSX.utils.sheet_to_json(flashcardsSheet);
+        if (materia !== 'all') {
+            flashcards = flashcards.filter(card => card.Materia === materia);
+        }
+        flashcards = flashcards.slice(0, count === 'all' ? flashcards.length : parseInt(count));
+        res.json(flashcards);
+    } catch (error) {
+        res.status(500).send('Erro ao obter flashcards');
+    }
 });
 
-// Inicializa o servidor
+// Inicia o servidor
 app.listen(port, () => {
-    loadWorkbook(); // Carrega o workbook quando o servidor inicia
+    loadWorkbook();
     console.log(`Server running on port ${port}`);
 });
