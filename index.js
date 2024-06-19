@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const XLSX = require('xlsx');
 const app = express();
-const port = process.env.PORT || 3000; // Replit utiliza a variável process.env.PORT
+const port = process.env.PORT || 3000;
 
 app.use(express.static('public')); // Serve static files from 'public' directory
 
@@ -12,9 +12,9 @@ let materiasSheet;
 
 function loadWorkbook() {
     try {
-        workbook = XLSX.readFile('bd.xlsx');
+        workbook = XLSX.readFile(path.join(__dirname, 'public', 'bd.xlsx'));
         flashcardsSheet = workbook.Sheets['Flashcards'];
-        materiasSheet = workbook.Sheets['Materia'];
+        materiasSheet = workbook.Sheets['Materias'];
     } catch (error) {
         console.error('Erro ao carregar a planilha:', error);
     }
