@@ -30,6 +30,10 @@ function loadFlashcards(selectedMateria, selectedCount) {
 }
 
 // Configuração das rotas do servidor
+app.get('/', (req, res) => {
+    res.send('Welcome to the Flashcards API! Use /materias to see available subjects and /flashcards to access flashcards.');
+});
+
 app.get('/materias', (req, res) => {
     res.json(loadMaterias());
 });
