@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Estudo para Concurso de Juiz - TJ-BA</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Flashcards para Concurso de Juiz - TJ-BA</h1>
+    </header>
+    <main>
+        <div>
+            <label for="materia-select">Selecione a matéria:</label>
+            <select id="materia-select">
+                <!-- As opções serão carregadas pelo JavaScript -->
+            </select>
+        </div>
+        <div>
+            <label for="flashcard-count">Quantos flashcards você quer estudar?</label>
+            <select id="flashcard-count">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="all">Todos</option>
+            </select>
+            <button onclick="loadFlashcards()">Carregar Flashcards</button>
+        </div>
+        <div id="flashcard-container">
+            <!-- Flashcards serão carregados aqui -->
+        </div>
+    </main>
+    <footer>
+        <p>Desenvolvido por Edvan Pablo</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
