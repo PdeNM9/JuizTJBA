@@ -1,25 +1,36 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #f4f4f4;
+    background-color: #f0f2f5;
+    color: #333;
 }
 
 header {
     background-color: #007bff;
     color: white;
     width: 100%;
-    padding: 10px 0;
+    padding: 20px 0;
     text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
 }
 
 main {
-    width: 80%;
+    width: 90%;
     max-width: 800px;
-    margin-top: 20px;
+    margin: 20px 0;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 footer {
@@ -29,25 +40,103 @@ footer {
     width: 100%;
     text-align: center;
     padding: 10px 0;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Estilos para os flashcards */
 #flashcard-container div {
-    background-color: white;
+    background-color: #ffffff;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
+    border-radius: 8px;
+    padding: 20px;
     margin: 10px 0;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#flashcard-container div:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #flashcard-container h3 {
     margin-top: 0;
+    font-size: 1.5rem;
+    color: #007bff;
+}
+
+.answer {
+    display: none;
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+.show-answer {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.show-answer:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+.show-answer:active {
+    background-color: #004494;
+}
+
+#controls {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    margin-top: 20px;
+}
+
+#prev-button, #next-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#prev-button:hover, #next-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+#prev-button:active, #next-button:active {
+    background-color: #004494;
 }
 
 /* Estilos para responsividade */
 @media (max-width: 600px) {
     main {
         width: 95%;
+    }
+
+    #controls {
+        flex-direction: column;
+    }
+
+    #prev-button, #next-button {
+        width: 100%;
+        margin-top: 10px;
     }
 }
